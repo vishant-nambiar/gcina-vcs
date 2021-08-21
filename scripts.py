@@ -6,9 +6,10 @@ def bash_execute(commands):
     last_output = ''
     for command in commands:
         last_output = subprocess.run(command.split(' '), stdout=subprocess.PIPE, text=True).stdout
+    return last_output
 
 def init():
-    file_list = subprocess.run(['ls', '-a'], stdout=subprocess.PIPE, text=True).stdout
+    file_list = bash_execute("ls -a")
     
     if ".repo" in file_list:
         raise Exception("Directory already initialized.")
