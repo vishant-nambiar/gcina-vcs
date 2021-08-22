@@ -18,5 +18,5 @@ def init():
         mkdir .repo
         mkdir .repo/refs
         touch .repo/refs/tags
-        touch .repo/snapshots""")
+        mkdir .repo/snapshots""")
     bash_execute(command)
