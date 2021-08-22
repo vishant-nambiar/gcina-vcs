@@ -1,3 +1,4 @@
+from os import mkdir
 import subprocess
 from inspect import cleandoc
 
@@ -26,3 +27,6 @@ def commit():
     if('.repo' not in file_list):
         raise Exception("Directory uninitialized.")
     
+    file_list = bash_execute('ls .repo/snapshots/').split()
+    num_of_files = len(file_list)
+    bash_execute(f"mkdir .repo/snapshots/{num_of_files + 1}")
