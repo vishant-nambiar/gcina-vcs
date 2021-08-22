@@ -2,8 +2,12 @@
 
 import sys
 from scripts import *
+import subprocess
+import os
+#sync test folder with vcs folder and run inside test folder
+subprocess.run(["./sync_test_folder"], cwd='/home/vishant/Programming/VCS')
+os.chdir('/home/vishant/Programming/VCS/test')
 
-
-
-
-if( sys.argv[1] == 'init' ) : init()
+base_command = sys.argv[1]
+if( base_command == 'init' ) : init()
+if( base_command == 'commit' ) : commit()

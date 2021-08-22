@@ -11,7 +11,6 @@ def bash_execute(commands):
 
 def init():
     file_list = bash_execute("ls -a")
-    
     if ".repo" in file_list:
         raise Exception("Directory already initialized. If you think this is a mistake, please delete '.repo' before continuing.")
     
@@ -21,3 +20,9 @@ def init():
         touch .repo/refs/tags
         mkdir .repo/snapshots""")
     bash_execute(command)
+
+def commit():
+    file_list = bash_execute('ls -a')
+    if('.repo' not in file_list):
+        raise Exception("Directory uninitialized.")
+    
