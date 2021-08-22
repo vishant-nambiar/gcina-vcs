@@ -12,6 +12,7 @@ def bash_execute(commands):
 
 def init():
     file_list = bash_execute("ls -a")
+    print(bash_execute('pwd'))
     if ".repo" in file_list:
         raise Exception("Directory already initialized. If you think this is a mistake, please delete '.repo' before continuing.")
     
@@ -27,6 +28,10 @@ def commit():
     if('.repo' not in file_list):
         raise Exception("Directory uninitialized.")
     
+    #makes new commit directory with commit number as name
     file_list = bash_execute('ls .repo/snapshots/').split()
     num_of_files = len(file_list)
-    bash_execute(f"mkdir .repo/snapshots/{num_of_files + 1}")
+    new_file_number = num_of_files + 1
+    bash_execute(f"mkdir .repo/snapshots/{new_file_number}")
+    #copies current working directory files into new commit directory
+    bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/snapshots/{new_file_number}')
