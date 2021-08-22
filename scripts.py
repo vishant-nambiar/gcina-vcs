@@ -23,6 +23,7 @@ def init():
         mkdir .repo/snapshots""")
     bash_execute(command)
 
+
 def commit():
     file_list = bash_execute('ls -a')
     if('.repo' not in file_list):
@@ -46,3 +47,20 @@ def commit():
     commit_file = open(f".repo/snapshots/{new_file_number}/.commit", "w")
     commit_file.write(user + date_time + commit_message + '\n')
     commit_file.close()
+
+
+def log():
+    snapshot_file_list = bash_execute("ls .repo/snapshots/")
+    log_output = ''
+    for file_number in snapshot_file_list.split('\n')[:-1]:
+        file = open(f".repo/snapshots/{file_number}/.commit", "r")
+        user = file.readline()[:-1]
+        date_time = file.readline()[:-1]
+        message = file.readline()[:-1]
+        file.close()
+        log_output += cleandoc(f"""
+            Snaphot: {file_number}
+            Author: {user}
+            Date & time: {date_time}
+            Message: {message}""") + '\n\n'
+    print(log_output)
