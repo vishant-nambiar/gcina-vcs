@@ -13,7 +13,6 @@ def bash_execute(commands):
 
 def init():
     file_list = bash_execute("ls -a")
-    print(bash_execute('pwd'))
     if ".repo" in file_list:
         raise Exception("Directory already initialized. If you think this is a mistake, please delete '.repo' before continuing.")
     
