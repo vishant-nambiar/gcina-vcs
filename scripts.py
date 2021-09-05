@@ -59,7 +59,7 @@ def log():
         message = file.readline()[:-1]
         file.close()
         log_output += cleandoc(f"""
-            Snaphot: {file_number}
+            Snapshot: {file_number}
             Author: {user}
             Date & time: {date_time}
             Message: {message}""") + '\n\n'
