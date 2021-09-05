@@ -12,3 +12,4 @@ base_command = sys.argv[1]
 if( base_command == 'init' ) : init()
 if( base_command == 'commit' ) : commit()
 if( base_command == 'log' ) : log()
+if( base_command == 'checkout') : checkout()

@@ -81,5 +81,24 @@ def log():
             Message: {message}""") + '\n\n'
     
     print(log_output)
-        
+
+
+
+def checkout():
+    if len(sys.argv) < 3:
+        raise Exception("Please provide commit hash")
     
+    hash = sys.argv[2]
+    commit_file = f".repo/snapshots/{hash}"
+    
+    file_list = bash_execute("ls -a")
+    file_list = file_list.split('\n')[2:-1]
+    for file in file_list:
+        if file not in ['.repo', 'scripts.py', 'vcs']:
+            bash_execute(f"rm -r {file}")
+
+    #unzip hash file to working directory
+    shutil.unpack_archive(f".repo/snapshots/{hash}.zip")
+
+
+     
