@@ -98,7 +98,10 @@ def checkout():
             bash_execute(f"rm -r {file}")
 
     #unzip hash file to working directory
-    shutil.unpack_archive(f".repo/snapshots/{hash}.zip")
-
+    try:
+        shutil.unpack_archive(f".repo/snapshots/{hash}.zip")
+    except shutil.ReadError:
+        raise Exception("Hash not found.")
+    
 
      
