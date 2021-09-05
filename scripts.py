@@ -3,6 +3,7 @@ from os import mkdir
 import subprocess
 from inspect import cleandoc
 import hashlib
+import shutil
 
 #Executes any number of bash commands, one on each line
 def bash_execute(commands):
@@ -33,16 +34,20 @@ def commit():
     elif(len(sys.argv) < 3):
         raise Exception("Please enter commit message.")
     
-    #makes new commit directory with commit hash as name
+    #makes new commit directory with temp as name
     user = bash_execute('whoami')
     date_time = bash_execute("date")
     commit_message = sys.argv[2]
     hash = hashlib.sha1( bytes(user + date_time + commit_message, 'utf-8') ).hexdigest()
+    bash_execute(f"mkdir .repo/snapshots/temp")
     
-    bash_execute(f"mkdir .repo/snapshots/{hash}")
-    
-    #copies working directory files into new commit directory
-    bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/snapshots/{hash}')
+    #copies working directory files into new temp directory
+    bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/snapshots/temp')
+
+    #compresses the directory into a file named with the hash and removes temp
+    shutil.make_archive(f".repo/snapshots/{hash}", "zip", f".repo/snapshots/temp")
+    bash_execute("rm -r .repo/snapshots/temp")
+
     
     #stores commit info in logs file
     logs_file = open(f".repo/logs", "a")
