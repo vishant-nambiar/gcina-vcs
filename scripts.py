@@ -97,25 +97,37 @@ def checkout():
         raise Exception("Please provide commit hash")
 
     hash = sys.argv[2]
-    commit_file = f".repo/snapshots/{hash}"
+    if hash == 'workdir':
 
-    #checks if hash exists
-    commit_list = bash_execute("ls .repo/snapshots/")
-    commit_list = commit_list.split('\n')[:-1]
-    if f"{hash}.zip" not in commit_list:
-        raise Exception("Hash not found.")
-    
-    #save workding directory
-    bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/cache')
-    
-    file_list = bash_execute("ls -a")
-    file_list = file_list.split('\n')[2:-1]
-    for file in file_list:
-        if file not in ['.repo', 'scripts.py', 'vcs']:
-            bash_execute(f"rm -r {file}")
+        file_list = bash_execute("ls -a")
+        file_list = file_list.split('\n')[2:-1]
+        for file in file_list:
+            if file not in ['.repo', 'scripts.py', 'vcs']:
+                bash_execute(f"rm -r {file}")
+        
+        bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py .repo/cache/ .')
 
-    #unzip hash file to working directory
-    shutil.unpack_archive(f".repo/snapshots/{hash}.zip")
+    else:
+        commit_file = f".repo/snapshots/{hash}"
+
+        #checks if hash exists
+        commit_list = bash_execute(f"ls .repo/snapshots/")
+        commit_list = commit_list.split('\n')[:-1]
+        print(commit_list)
+        if f"{hash}.zip" not in commit_list:
+            raise Exception("Hash not found.")
+    
+        #cache workding directory to cache directory
+        bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/cache')
+        
+        file_list = bash_execute("ls -a")
+        file_list = file_list.split('\n')[2:-1]
+        for file in file_list:
+            if file not in ['.repo', 'scripts.py', 'vcs']:
+                bash_execute(f"rm -r {file}")
+
+        #unzip hash file to working directory
+        shutil.unpack_archive(f".repo/snapshots/{hash}.zip")
     
     
 
