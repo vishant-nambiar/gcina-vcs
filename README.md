@@ -1,6 +1,6 @@
 # gcina
 -----------------------------------------------
-gcina is a version control system CLI, similar to git or mercurial. gcina initializes your desired directory as a repository and stores your work efficiently both speed and memory wise, helping you recover or revert to a previous work state anytime.
+gcina is a version control system CLI, similar to git or mercurial. gcina initializes your desired directory as a repository and stores your work efficiently both speed and memory wise, helping you recover or revert to a previous work state anytime. The name gcina comes from the Zulu word 'gcina' which means to save or keep.
 
 ## How it works
 You can run gcina on any directory that you would like to use as a repository to store your work. To do so, you have to tell gcina to commit it, which is explained further below. A commit can be thought of as a snapshot of your work in time, something you would like to save in case you need to come back to it later. Every commit generates a unique SHA1 hash which is used to identify the commit. All commits and their info can be viewed. Every commit is stored in a compressed format to use only minimal space, and is uncompressed when you wish to revert to it. When you revert to a commit, your work state is saved, and you can return to it later if you wish to. 
