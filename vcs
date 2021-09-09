@@ -8,8 +8,17 @@ import os
 subprocess.run(["./sync_test_folder"], cwd='/home/vishant/Programming/VCS')
 os.chdir('/home/vishant/Programming/VCS/test')
 
+if len(sys.argv) < 2 : raise Exception("Please input a command")
+
 base_command = sys.argv[1]
+
 if( base_command == 'init' ) : init()
-if( base_command == 'commit' ) : commit()
-if( base_command == 'log' ) : log()
-if( base_command == 'checkout') : checkout()
+else:
+    file_list = bash_execute('ls -a')
+    if('.repo' not in file_list):
+        raise Exception("Directory uninitialized.")
+
+    if( base_command == 'commit' ) : commit()
+    elif( base_command == 'log' ) : log()
+    elif( base_command == 'checkout') : checkout()
+    else : raise Exception("Command not recognized.")

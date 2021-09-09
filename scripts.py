@@ -29,10 +29,7 @@ def init():
 
 
 def commit():
-    file_list = bash_execute('ls -a')
-    if('.repo' not in file_list):
-        raise Exception("Directory uninitialized.")
-    elif(len(sys.argv) < 3):
+    if(len(sys.argv) < 3):
         raise Exception("Please enter commit message.")
 
     #clear cache directory
@@ -108,7 +105,6 @@ def checkout():
         bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py .repo/cache/ .')
 
     else:
-        commit_file = f".repo/snapshots/{hash}"
 
         #checks if hash exists
         commit_list = bash_execute(f"ls .repo/snapshots/")
