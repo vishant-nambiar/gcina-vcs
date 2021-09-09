@@ -57,7 +57,7 @@ def commit():
     bash_execute(f"mkdir .repo/snapshots/temp")
     
     #copy working directory files into new temp directory
-    bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/snapshots/temp')
+    bash_execute(f'rsync -a --exclude=.repo --exclude=gcina ./ .repo/snapshots/temp')
 
     #compress the directory into a file named with the hash and remove temp
     shutil.make_archive(f".repo/snapshots/{hash}", "zip", f".repo/snapshots/temp")
@@ -109,10 +109,10 @@ def checkout():
         file_list = bash_execute("ls -a")
         file_list = file_list.split('\n')[2:-1]
         for file in file_list:
-            if file not in ['.repo', 'scripts.py', 'vcs']:
+            if file not in ['.repo', 'gcina']:
                 bash_execute(f"rm -r {file}")
         
-        bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py .repo/cache/ .')
+        bash_execute(f'rsync -a --exclude=.repo --exclude=gcina .repo/cache/ .')
 
     else:
 
@@ -123,12 +123,12 @@ def checkout():
             raise Exception("Hash not found.")
     
         #cache workding directory to cache directory
-        bash_execute(f'rsync -a --exclude=.repo --exclude=vcs --exclude=scripts.py ./ .repo/cache')
+        bash_execute(f'rsync -a --exclude=.repo --exclude=gcina ./ .repo/cache')
         
         file_list = bash_execute("ls -a")
         file_list = file_list.split('\n')[2:-1]
         for file in file_list:
-            if file not in ['.repo', 'scripts.py', 'vcs']:
+            if file not in ['.repo', 'gcina']:
                 bash_execute(f"rm -r {file}")
 
         #unzip hash file to working directory
