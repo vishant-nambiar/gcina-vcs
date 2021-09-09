@@ -113,7 +113,6 @@ def checkout():
         #checks if hash exists
         commit_list = bash_execute(f"ls .repo/snapshots/")
         commit_list = commit_list.split('\n')[:-1]
-        print(commit_list)
         if f"{hash}.zip" not in commit_list:
             raise Exception("Hash not found.")
     
