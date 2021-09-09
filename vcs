@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 
 import sys
-import os
 import subprocess
 from inspect import cleandoc
 import hashlib
 import shutil
 
-#sync test folder with vcs folder and run inside test folder
-subprocess.run(["./sync_test_folder"], cwd='/home/vishant/Programming/VCS')
-os.chdir('/home/vishant/Programming/VCS/test')
 
 
 
@@ -93,7 +89,7 @@ def log():
         message = commit[3]
         
         log_output += cleandoc(f"""
-            Snapshot: {commit_hash}
+            Commit: {commit_hash}
             Author: {user}
             Date & time: {date_time}
             Message: {message}""") + '\n\n'
