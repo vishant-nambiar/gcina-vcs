@@ -20,8 +20,6 @@ def init():
     
     command = cleandoc("""
         mkdir .repo
-        mkdir .repo/refs
-        touch .repo/refs/tags
         mkdir .repo/snapshots
         touch .repo/logs
         mkdir .repo/cache""")
